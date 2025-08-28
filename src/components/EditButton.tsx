@@ -53,7 +53,12 @@ const EditButton = ({
     }
   };
   return (
-    <Dialog open={isOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        setIsOpen(open);
+      }}
+    >
       <DialogTrigger asChild>
         <button
           className={cn("flex items-center justify-center", className)}
