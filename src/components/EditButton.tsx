@@ -10,7 +10,7 @@ import {
 import Input from "./Input";
 import RadioGroup from "./RadioGroup";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { cn } from "../lib/utils";
 import ErrorMessage from "./ErrorMessage";
 
@@ -44,16 +44,22 @@ const EditButton = ({
     formState: { errors },
   } = useForm<Inputs>();
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    if (onSubmitEdit) onSubmitEdit(data);
+    if (onSubmitEdit) {
+      onSubmitEdit(data);
+      setIsOpen(false);
+    }
   };
   return (
-    <Dialog>
+    <Dialog open={isOpen}>
       <DialogTrigger asChild>
         <button
           className={cn("flex items-center justify-center", className)}
           type="button"
           {...props}
+          onClick={() => setIsOpen(true)}
         >
           {icon}
           <span>{children}</span>
